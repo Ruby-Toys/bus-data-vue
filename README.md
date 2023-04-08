@@ -1,24 +1,7 @@
-# bus-data-vue
+# Bus Data Vue
+- 버스정류장 관련 데이터 관리 화면
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 요구사항
+- 버스정류장 데이터 조회
+- 버스정류장 데이터 저장 및 갱신
+    - 요청시 버스정류장 csv 파일을 첨부하여 요청
