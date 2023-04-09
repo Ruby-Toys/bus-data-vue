@@ -28,7 +28,9 @@
           >
             취소
           </button>
-          <button type="button" class="btn btn-primary">{{ approve }}</button>
+          <button v-if="approve" type="button" class="btn btn-primary">
+            {{ approve }}
+          </button>
         </div>
       </div>
     </div>
@@ -41,7 +43,7 @@ import { defineProps } from "vue";
 defineProps({
   id: { type: String, required: true },
   title: { type: String, required: true },
-  approve: { type: String, required: true },
+  approve: { type: String, required: false },
 });
 </script>
 

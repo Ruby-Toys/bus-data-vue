@@ -28,11 +28,23 @@
     </ListComp>
     <PaginationComp />
   </div>
-  <ModalComp :id="modal.id" :title="modal.title" :approve="modal.approve">
+  <ModalComp :id="modal.id" :title="modal.title">
     <template #body>
-      <div class="input-group mb-3">
-        <input type="file" class="form-control" id="busFile" />
-      </div>
+      <form
+        id="busModalForm"
+        @submit.prevent="submitBusDataFile"
+        enctype="multipart/form-data"
+      >
+        <div class="input-group mb-3">
+          <input
+            type="file"
+            class="form-control"
+            id="busDataFile"
+            @change="onChangeFile"
+          />
+          <button type="submit" class="btn btn-primary">갱신</button>
+        </div>
+      </form>
     </template>
   </ModalComp>
 </template>
@@ -42,13 +54,13 @@ import ListComp from "@/components/common/ListComp.vue";
 import NavbarComp from "@/components/common/NavbarComp.vue";
 import PaginationComp from "@/components/common/PaginationComp.vue";
 import ModalComp from "@/components/common/ModalComp.vue";
-import { reactive, ref } from "vue";
+import { reactive, Ref, ref } from "vue";
 import ModalToggleButtonComp from "@/components/common/ModalToggleButtonComp.vue";
+import { renewBusDataApi } from "@/api/busStationApi";
 
 const modal = reactive({
   id: "busModal",
   title: "버스 데이터 갱신",
-  approve: "갱신",
   toggle: "데이터 갱신",
 });
 
@@ -81,6 +93,23 @@ const busList = ref([
     bcode: "1100000000",
   },
 ]);
+
+const busFormData: Ref<FormData> = ref(new FormData());
+
+const onChangeFile = (event: InputEvent) => {
+  const eventTarget = event.target as HTMLInputElement;
+  const files = eventTarget.files as FileList;
+  const busFile = files[0];
+
+  if (busFile) {
+    busFormData.value.delete("busDataFile");
+    busFormData.value.append("busDataFile", busFile);
+  }
+};
+
+const submitBusDataFile = async () => {
+  await renewBusDataApi(busFormData.value);
+};
 </script>
 
 <style scoped></style>
