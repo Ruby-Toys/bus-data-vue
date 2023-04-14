@@ -8,13 +8,30 @@
           type="search"
           placeholder="Search"
           aria-label="Search"
+          v-model="search"
         />
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button
+          class="btn btn-outline-success"
+          type="button"
+          @click="callGetListApi"
+        >
+          Search
+        </button>
       </form>
     </div>
   </nav>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useBusStationStore } from "@/store/busStationStore";
+import { storeToRefs } from "pinia";
+
+const busStationStore = useBusStationStore();
+const { search } = storeToRefs(busStationStore);
+
+const callGetListApi = () => {
+  busStationStore.getList();
+};
+</script>
 
 <style scoped></style>
